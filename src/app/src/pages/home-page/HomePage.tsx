@@ -11,14 +11,10 @@ export interface HomePageProps {}
 export function HomePage(props: HomePageProps) {
   return (
     <>
-    <Navbar />
-
     {/* <!-- Hero --> */}
     <Hero />
-
     {/* <!-- Developers and Employers --> */}
     <Homecards />
-
     {/* <!-- Browse Jobs --> */}
     <JobListing />
     <ViewAllJobs />
