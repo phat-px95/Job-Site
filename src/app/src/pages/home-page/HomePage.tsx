@@ -16,7 +16,7 @@ export function HomePage(props: HomePageProps) {
     {/* <!-- Developers and Employers --> */}
     <Homecards />
     {/* <!-- Browse Jobs --> */}
-    <JobListing />
+    <JobListing isHome={false}/>
     <ViewAllJobs />
   </>
   );

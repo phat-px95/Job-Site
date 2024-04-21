@@ -1,13 +1,16 @@
+import JobListing from '../../components/job-listing/JobListing';
 import styles from './JobPage.module.css';
 
 /* eslint-disable-next-line */
-export interface JobPageProps {}
+export interface JobPageProps {
+  
+}
 
 export function JobPage(props: JobPageProps) {
   return (
-    <div className={styles['container']}>
-      <h1>Welcome to JobPage!</h1>
-    </div>
+    <section className='bg-blue-500 px-4 py-6'>
+      <JobListing isHome={true}/>
+    </section>
   );
 }
 
