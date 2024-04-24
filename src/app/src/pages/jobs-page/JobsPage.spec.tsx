@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import JobPage from './JobPage';
+import { JobsPage } from './JobsPage';
 
 describe('JobPage', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<JobPage />);
+    const { baseElement } = render(<JobsPage />);
     expect(baseElement).toBeTruthy();
   });
 });
