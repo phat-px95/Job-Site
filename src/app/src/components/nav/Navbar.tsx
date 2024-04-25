@@ -37,7 +37,7 @@ export function Navbar(props: NavbarProps) {
                   >Jobs
                 </NavLink>
                 <NavLink
-                  to="/add-job.html"
+                  to="/add-job"
                   className={linkClass}
                   >Add Job
                 </NavLink>
