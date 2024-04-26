@@ -1,17 +1,30 @@
 import { useEffect, useState } from 'react';
 import styles from './JobDetailPage.module.css';
-import { Link, useLoaderData, useParams} from 'react-router-dom';
+import { Link, useLoaderData, useNavigate, useParams} from 'react-router-dom';
 import Spinner from '../../components/spinner/Spinner';
 import { Job } from '../../components/job-listing/JobListing';
-import { FaArrowLeft, FaMapMarker } from 'react-icons/fa'
+import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 /* eslint-disable-next-line */
-export interface JobDetailPageProps {}
+export interface JobDetailPageProps {
+  deleteJob(jobId: string),
+}
 
 
-export function JobDetailPage(props: JobDetailPageProps) {
+export function JobDetailPage({deleteJob}: JobDetailPageProps) {
   const {id} = useParams();
   const job = useLoaderData() as Job;
+  const navigate = useNavigate();
+  const onDelete = (jobId: string) => {
+    const confirm = window.confirm('Are you sure?');
+    if (!confirm) {
+      return null;
+    }
+    deleteJob(jobId);
+    toast.success('Delete Job Successfully!');
+    navigate('/jobs');
+  };
   return (
     <>
       <section>
@@ -93,7 +106,7 @@ export function JobDetailPage(props: JobDetailPageProps) {
                 >Edit Job
               </Link>
               <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+                onClick={() => onDelete(job.id)}className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
               >
                 Delete Job
               </button>

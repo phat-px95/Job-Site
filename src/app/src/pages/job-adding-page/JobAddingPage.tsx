@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './JobAddingPage.module.css';
 import { Job } from '../../components/job-listing/JobListing';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 /* eslint-disable-next-line */
 export interface JobAddingPageProps {
@@ -37,6 +38,7 @@ export function JobAddingPage({addSubmitJob}: JobAddingPageProps) {
     } as Job;
 
     addSubmitJob(newJob);
+    toast.success('Add A New Job Successfully!');
     navigate('/jobs');
   };
   return (

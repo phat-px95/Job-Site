@@ -22,6 +22,12 @@ export function App() {
     });
     
   };
+
+  const deleteJob = async (id: string) => {
+    const res = await fetch(`api/jobs/${id}`, {
+      method: 'DELETE'
+    });
+  };
   const JobsPage = lazy(() => import('./src/pages/jobs-page/JobsPage'));
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -30,7 +36,7 @@ export function App() {
         <Route index element={<HomePage />}></Route>,
         <Route path='/jobs' element={<Suspense fallback={<>...</>}><JobsPage /></Suspense>}></Route>
         <Route path='/add-job' element={<JobAddingPage addSubmitJob={addJob} />}></Route>
-        <Route path='/jobs/:id' element={<Suspense fallback={<>...</>}><JobDetailPage /></Suspense>} loader={jobDataLoader}></Route>
+        <Route path='/jobs/:id' element={<Suspense fallback={<>...</>}><JobDetailPage deleteJob={deleteJob}/></Suspense>} loader={jobDataLoader}></Route>
         <Route path='*' element={<NotFoundPage />}></Route>
       </Route>
   
