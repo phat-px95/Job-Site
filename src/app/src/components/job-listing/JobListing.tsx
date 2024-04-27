@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Job from '../job/Job';
 import styles from './JobListing.module.css';
 import Spinner from '../spinner/Spinner';
+import { JobTitle } from '../../pages/job-adding-page/JobAddingPage';
 /* eslint-disable-next-line */
 export interface JobListingProps {
   isHome: boolean
@@ -10,7 +11,7 @@ export interface JobListingProps {
 export interface Job {
   "id": string,
   "title": string,
-  "type": string,
+  "type": JobTitle,
   "description": string,
   "location": string,
   "salary": string,

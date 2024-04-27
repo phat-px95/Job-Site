@@ -6,11 +6,11 @@ import { toast } from 'react-toastify';
 
 /* eslint-disable-next-line */
 export interface JobAddingPageProps {
-  addSubmitJob(newJob),
+  addSubmittedJob(newJob: Job): void,
 }
 export type JobTitle = 'Full-Time' | 'Part-Time' | 'Remote' | 'Internship';
 
-export function JobAddingPage({addSubmitJob}: JobAddingPageProps) {
+export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
   const [title, setTitle] = useState('');
   const [type, setType] = useState<JobTitle>('Full-Time');
   const [location, setLocation] = useState('');
@@ -37,7 +37,7 @@ export function JobAddingPage({addSubmitJob}: JobAddingPageProps) {
       }
     } as Job;
 
-    addSubmitJob(newJob);
+    addSubmittedJob(newJob);
     toast.success('Add A New Job Successfully!');
     navigate('/jobs');
   };

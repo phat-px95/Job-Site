@@ -7,6 +7,7 @@ import NotFoundPage from './src/pages/not-found-page/NotFoundPage';
 import JobDetailPage, { jobDataLoader } from './src/pages/job-detail-page/JobDetailPage';
 import JobAddingPage from './src/pages/job-adding-page/JobAddingPage';
 import { Job } from './src/components/job-listing/JobListing';
+import JobEditingPage from './src/pages/job-editing-page/JobEditingPage';
 
 // import NxWelcome from './nx-welcome';
 
@@ -23,6 +24,16 @@ export function App() {
     
   };
 
+  const editJob = async (job: Job) => {
+    const res = await fetch(`api/jobs/${job.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(job)
+    });
+  };
+
   const deleteJob = async (id: string) => {
     const res = await fetch(`api/jobs/${id}`, {
       method: 'DELETE'
@@ -35,7 +46,8 @@ export function App() {
       <Route path='/' Component={MainLayout}>
         <Route index element={<HomePage />}></Route>,
         <Route path='/jobs' element={<Suspense fallback={<>...</>}><JobsPage /></Suspense>}></Route>
-        <Route path='/add-job' element={<JobAddingPage addSubmitJob={addJob} />}></Route>
+        <Route path='/add-job' element={<JobAddingPage addSubmittedJob={addJob} />}></Route>
+        <Route path='/edit-job/:id' element={<JobEditingPage addSubmittedJob={editJob}/>} loader={jobDataLoader}></Route>
         <Route path='/jobs/:id' element={<Suspense fallback={<>...</>}><JobDetailPage deleteJob={deleteJob}/></Suspense>} loader={jobDataLoader}></Route>
         <Route path='*' element={<NotFoundPage />}></Route>
       </Route>
