@@ -8,7 +8,7 @@ export interface JobsPageProps {
 
 export function JobsPage(props: JobsPageProps) {
   return (
-    <section className='bg-blue-500 px-4 py-6'>
+    <section className='px-4 py-6'>
       <JobListing isHome={true}/>
     </section>
   );
