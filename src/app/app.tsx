@@ -5,7 +5,7 @@ import MainLayout from './src/layouts/main-layout/MainLayout';
 import { Suspense, lazy } from 'react';
 import NotFoundPage from './src/pages/not-found-page/NotFoundPage';
 import JobDetailPage, { jobDataLoader } from './src/pages/job-detail-page/JobDetailPage';
-import JobAddingPage from './src/pages/job-adding-page/JobAddingPage';
+import JobAddingPage, { countryDataLoader } from './src/pages/job-adding-page/JobAddingPage';
 import { Job } from './src/components/job-listing/JobListing';
 import JobEditingPage from './src/pages/job-editing-page/JobEditingPage';
 
@@ -46,7 +46,7 @@ export function App() {
       <Route path='/' Component={MainLayout}>
         <Route index element={<HomePage />}></Route>,
         <Route path='/jobs' element={<Suspense fallback={<>...</>}><JobsPage /></Suspense>}></Route>
-        <Route path='/add-job' element={<JobAddingPage addSubmittedJob={addJob} />}></Route>
+        <Route path='/add-job' element={<JobAddingPage addSubmittedJob={addJob} />} loader={countryDataLoader}></Route>
         <Route path='/edit-job/:id' element={<JobEditingPage addSubmittedJob={editJob}/>} loader={jobDataLoader}></Route>
         <Route path='/jobs/:id' element={<Suspense fallback={<>...</>}><JobDetailPage deleteJob={deleteJob}/></Suspense>} loader={jobDataLoader}></Route>
         <Route path='*' element={<NotFoundPage />}></Route>

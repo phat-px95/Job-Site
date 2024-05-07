@@ -97,5 +97,43 @@
         "contactPhone": "555-555-5555"
       }
     }
+  ],
+  "countries": [
+    {
+      "id": 1,
+      "name": "Canada"
+    },
+    {
+      "id": 2,
+      "name": "US"
+    },
+    {
+      "id": 3,
+      "name": "Peru"
+    },
+    {
+      "id": 4,
+      "name": "China"
+    },
+    {
+      "id": 5,
+      "name": "Italy"
+    },
+    {
+      "id": 6,
+      "name": "Korea"
+    },
+    {
+      "id": 7,
+      "name": "Russia"
+    },
+    {
+      "id": 8,
+      "name": "Mexico"
+    },
+    {
+      "id": 9,
+      "name": "Finland"
+    }
   ]
 }

@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './JobAddingPage.module.css';
 import { Job } from '../../components/job-listing/JobListing';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 /* eslint-disable-next-line */
 export interface JobAddingPageProps {
   addSubmittedJob(newJob: Job): void,
 }
+type Country = {
+  name: string,
+  id: number
+}
 export type JobTitle = 'Full-Time' | 'Part-Time' | 'Remote' | 'Internship';
 
-export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
+export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode {
+  
   const [title, setTitle] = useState('');
   const [type, setType] = useState<JobTitle>('Full-Time');
+  
   const [location, setLocation] = useState('');
+  const [countrySuggestions, setCountrySuggestion] = useState([] as Country[]);
+  const [isCountryInputClicked, setIsCountryInputClicked] = useState(false);
+  const countryList = useLoaderData() as Country[];
+  const countryInput = useRef(null);
+
   const [description, setDescription] = useState('');
   const [salary, setSalary] = useState('Under $50K');
   const [companyName, setCompanyName] = useState('');
@@ -22,7 +33,19 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
   const [contactPhone, setContactPhone] = useState('');
 
   const navigate = useNavigate();
-  const submitForm = (e) => {
+
+  useEffect(()=> {
+    setCountrySuggestion(countryList);
+  },[]);
+
+  const handleCountryInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const textValue = e.target.value;
+    setLocation(textValue);
+    const matchedCountryList = countryList.filter(country => country.name.toLowerCase().includes(textValue.toLowerCase()));
+    setCountrySuggestion(matchedCountryList);
+  };
+
+  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newJob = {
       title,
@@ -41,6 +64,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
     toast.success('Add A New Job Successfully!');
     navigate('/jobs');
   };
+
   return (
     <section className="bg-indigo-50">
       <div className="container m-auto max-w-2xl py-24">
@@ -82,7 +106,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 placeholder="eg. Beautiful Apartment In Miami"
                 required
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value as string)}
               />
             </div>
             <div className="mb-4">
@@ -96,7 +120,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 className="border rounded w-full py-2 px-3"
                 rows={4}
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setDescription(e.target.value as string)}
                 placeholder="Add any job duties, expectations, requirements, etc"
               ></textarea>
             </div>
@@ -109,7 +133,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 name="salary"
                 className="border rounded w-full py-2 px-3"
                 value={salary}
-                onChange={(e) => setSalary(e.target.value)}
+                onChange={(e) => setSalary(e.target.value as string)}
                 required
               >
                 <option value="Under $50K">Under $50K</option>
@@ -137,9 +161,19 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 className='border rounded w-full py-2 px-3 mb-2'
                 placeholder='Company Location'
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={(e) => handleCountryInputChange(e)}
+                onClick={() => setIsCountryInputClicked(true)}
+                onFocus={() => setIsCountryInputClicked(true)}
+                onBlur={() => {setIsCountryInputClicked(false)}}
+                aria-autocomplete="list"
+                aria-controls="autocomplete-list"
+                ref={countryInput}
+                // onChange={(e) => setLocation(e.target.value as string)}
                 required           
               />
+            {(countrySuggestions.length > 0 && (isCountryInputClicked)) &&
+              <ul id="autocomplete-list">{countrySuggestions.map(country => <li key={country.id.toString()} className="cursor-pointer" onMouseDown={() => {setLocation(country.name);setIsCountryInputClicked(false)}}>{country.name}</li>)}</ul>
+            }
             </div>
 
             <h3 className="text-2xl mb-5">Company Info</h3>
@@ -154,7 +188,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 name="company"
                 className="border rounded w-full py-2 px-3"
                 value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
+                onChange={(e) => setCompanyName(e.target.value as string)}
                 placeholder="Company Name"
               />
             </div>
@@ -170,7 +204,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 className="border rounded w-full py-2 px-3"
                 rows={4}
                 value={companyDescription}
-                onChange={(e) => setCompanyDescription(e.target.value)}
+                onChange={(e) => setCompanyDescription(e.target.value as string)}
                 placeholder="What does your company do?"
               ></textarea>
             </div>
@@ -187,7 +221,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 className="border rounded w-full py-2 px-3"
                 placeholder="Email address for applicants"
                 value={contactEmail}
-                onChange={(e) => setContactEmail(e.target.value)}
+                onChange={(e) => setContactEmail(e.target.value as string)}
                 required
               />
             </div>
@@ -203,7 +237,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
                 name="contact_phone"
                 className="border rounded w-full py-2 px-3"
                 value={contactPhone}
-                onChange={(e) => setContactPhone(e.target.value)}
+                onChange={(e) => setContactPhone(e.target.value as string)}
                 placeholder="Optional phone for applicants"
               />
             </div>
@@ -223,4 +257,9 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps) {
   );
 }
 
-export default JobAddingPage;
+const countryDataLoader = async () => {
+  const res = (await fetch('api/countries'));
+  return await res.json();
+}
+
+export {JobAddingPage as default, countryDataLoader};
