@@ -1,6 +1,6 @@
 import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './JobAddingPage.module.css';
-import { Job } from '../../components/job-listing/JobListing';
+import { CompanyInfo, Job } from '../../components/job-listing/JobListing';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -27,6 +27,8 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
 
   const [description, setDescription] = useState('');
   const [salary, setSalary] = useState('Under $50K');
+  // Alternative way for controling Form
+  const [companyInfo, setCompanyInfo] = useState({description: '', name: '', contactEmail: '', contactPhone: ''} as CompanyInfo)
   const [companyName, setCompanyName] = useState('');
   const [companyDescription, setCompanyDescription] = useState('');
   const [contactEmail, setContactEmail] = useState('');
@@ -38,6 +40,10 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
     setCountrySuggestion(countryList);
   },[]);
 
+  const handleCompnayInfoChange = ({target: {name, value}}) => {
+    setCompanyInfo({...value, [name]: value});
+  }
+
   const handleCountryInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const textValue = e.target.value;
     setLocation(textValue);
@@ -45,7 +51,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
     setCountrySuggestion(matchedCountryList);
   };
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const newJob = {
       title,
@@ -53,10 +59,10 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
       location,
       description,
       company: {
-        name: companyName,
-        description: companyDescription,
-        contactEmail,
-        contactPhone
+        name: companyInfo.name,
+        description: companyInfo.description,
+        contactEmail: companyInfo.contactEmail,
+        contactPhone: companyInfo.contactPhone
       }
     } as Job;
 
@@ -185,10 +191,10 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
               <input
                 type="text"
                 id="company"
-                name="company"
+                name="name"
                 className="border rounded w-full py-2 px-3"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value as string)}
+                value={companyInfo.name}
+                onChange={(e) => handleCompnayInfoChange(e)}
                 placeholder="Company Name"
               />
             </div>
@@ -200,11 +206,11 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
                 >Company Description</label>
               <textarea
                 id="company_description"
-                name="company_description"
+                name="description"
                 className="border rounded w-full py-2 px-3"
                 rows={4}
-                value={companyDescription}
-                onChange={(e) => setCompanyDescription(e.target.value as string)}
+                value={companyInfo.description}
+                onChange={(e) => handleCompnayInfoChange(e)}
                 placeholder="What does your company do?"
               ></textarea>
             </div>
@@ -217,11 +223,11 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
               <input
                 type="email"
                 id="contact_email"
-                name="contact_email"
+                name="contactEmail"
                 className="border rounded w-full py-2 px-3"
                 placeholder="Email address for applicants"
-                value={contactEmail}
-                onChange={(e) => setContactEmail(e.target.value as string)}
+                value={companyInfo.contactEmail}
+                onChange={(e) => handleCompnayInfoChange(e)}
                 required
               />
             </div>
@@ -234,10 +240,10 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
               <input
                 type="tel"
                 id="contact_phone"
-                name="contact_phone"
+                name="contactEmail"
                 className="border rounded w-full py-2 px-3"
-                value={contactPhone}
-                onChange={(e) => setContactPhone(e.target.value as string)}
+                value={companyInfo.contactPhone}
+                onChange={(e) => handleCompnayInfoChange(e)}
                 placeholder="Optional phone for applicants"
               />
             </div>

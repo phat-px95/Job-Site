@@ -96,6 +96,16 @@
         "contactEmail": "contact@dolorsitamet.com",
         "contactPhone": "555-555-5555"
       }
+    },
+    {
+      "id": "6069",
+      "title": "Google Inter",
+      "type": "Full-Time",
+      "location": "China",
+      "description": "Google Inter 1",
+      "company": {
+        "contactEmail": "phatpx32@wru.vn"
+      }
     }
   ],
   "countries": [
