@@ -28,11 +28,8 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
   const [description, setDescription] = useState('');
   const [salary, setSalary] = useState('Under $50K');
   // Alternative way for controling Form
-  const [companyInfo, setCompanyInfo] = useState({description: '', name: '', contactEmail: '', contactPhone: ''} as CompanyInfo)
-  const [companyName, setCompanyName] = useState('');
-  const [companyDescription, setCompanyDescription] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactPhone, setContactPhone] = useState('');
+  const [companyInfo, setCompanyInfo] = useState({description: '', name: '', contactEmail: '', contactPhone: ''} as CompanyInfo);
+  const companyNameInputRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -156,7 +153,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
               </select>
             </div>
 
-            <div className='mb-4'>
+            <div className='mb-4 relative'>
               <label className='block text-gray-700 font-bold mb-2'>
                 Location
               </label>
@@ -164,7 +161,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
                 type='text'
                 id='location'
                 name='location'
-                className='border rounded w-full py-2 px-3 mb-2'
+                className='border rounded w-full py-2 px-3 mb-2 relative'
                 placeholder='Company Location'
                 value={location}
                 onChange={(e) => handleCountryInputChange(e)}
@@ -178,7 +175,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
                 required           
               />
             {(countrySuggestions.length > 0 && (isCountryInputClicked)) &&
-              <ul id="autocomplete-list">{countrySuggestions.map(country => <li key={country.id.toString()} className="cursor-pointer" onMouseDown={() => {setLocation(country.name);setIsCountryInputClicked(false)}}>{country.name}</li>)}</ul>
+              <ul id="autocomplete-list" className='absolute bg-white w-full'>{countrySuggestions.map(country => <li key={country.id.toString()} className="cursor-pointer" onMouseDown={() => {setLocation(country.name);setIsCountryInputClicked(false);}}>{country.name}</li>)}</ul>
             }
             </div>
 
@@ -196,6 +193,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
                 value={companyInfo.name}
                 onChange={(e) => handleCompnayInfoChange(e)}
                 placeholder="Company Name"
+                ref={companyNameInputRef}
               />
             </div>
 

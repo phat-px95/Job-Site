@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './Job.module.css';
 import {FaMapMarked} from 'react-icons/fa'
+import { IJobContext, JobContext } from '../../pages/jobs-page/JobsPage';
 
 /* eslint-disable-next-line */
 export interface JobProps {
@@ -8,6 +9,8 @@ export interface JobProps {
 }
 
 export function Job({job}: JobProps) {
+  const contextValue = useContext<IJobContext>(JobContext);
+
   const [showFullDes, setShowFullDes] = useState(false);
 
   let description = job.description as string;
@@ -19,7 +22,7 @@ export function Job({job}: JobProps) {
     <div className="bg-white rounded-xl shadow-md relative">
     <div className="p-4">
       <div className="mb-6">
-        <div className="text-gray-600 my-2">{job.type}</div>
+        <div className="text-gray-600 my-2"><span className='text-gray-800'>{contextValue.type}</span> {job.type}</div>
         <h3 className="text-xl font-bold">{job.title}</h3>
       </div>
 
