@@ -3,7 +3,7 @@ import styles from './card.module.css';
 
 /* eslint-disable-next-line */
 export interface CardProps {
-  children: ReactNode,
+  children?: ReactNode,
   bg?: string,
 }
 

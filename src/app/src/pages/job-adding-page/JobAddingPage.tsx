@@ -35,7 +35,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
 
   useEffect(()=> {
     setCountrySuggestion(countryList);
-  },[]);
+  },[countryList]);
 
   const handleCompnayInfoChange = ({target: {name, value}}) => {
     setCompanyInfo({...value, [name]: value});
