@@ -2,39 +2,22 @@ import { useState, useEffect } from 'react';
 import Job from '../job/Job';
 import styles from './JobListing.module.css';
 import Spinner from '../spinner/Spinner';
-import { JobTitle } from '../../pages/job-adding-page/JobAddingPage';
+import { IJob } from '../../models/job.model';
 /* eslint-disable-next-line */
 export interface JobListingProps {
   isHome: boolean
 }
 
-export interface Job {
-  "id": string,
-  "title": string,
-  "type": JobTitle,
-  "description": string,
-  "location": string,
-  "salary": string,
-  "company": CompanyInfo
-}
-
-export interface CompanyInfo {
-  "name": string,
-  "description": string,
-  "contactEmail": string,
-  "contactPhone": string,
-}
-
 export function JobListing({isHome = false}: JobListingProps) {
 
-  const [jobs, setJobs] = useState([] as Job[]);
+  const [jobs, setJobs] = useState([] as IJob[]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchJobs = async () => {
       const apiUrl = isHome ? '/api/jobs' : '/api/jobs?_limit=3';
       try {
         const res = await fetch(apiUrl);
-        const data = await res.json() as Job[];
+        const data = await res.json() as IJob[];
         setJobs(data);
       } catch (error) {
         console.log('Error fetching data', error)

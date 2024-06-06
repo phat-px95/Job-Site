@@ -1,18 +1,18 @@
 import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './JobAddingPage.module.css';
-import { CompanyInfo, Job } from '../../components/job-listing/JobListing';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { IJob, JobTitle } from '../../models/job.model';
+import { ICompanyInfo } from '../../models/company-info.model';
 
 /* eslint-disable-next-line */
 export interface JobAddingPageProps {
-  addSubmittedJob(newJob: Job): void,
+  addSubmittedJob(newJob: IJob): void,
 }
 type Country = {
   name: string,
   id: number
 }
-export type JobTitle = 'Full-Time' | 'Part-Time' | 'Remote' | 'Internship';
 
 export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode {
   
@@ -28,7 +28,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
   const [description, setDescription] = useState('');
   const [salary, setSalary] = useState('Under $50K');
   // Alternative way for controling Form
-  const [companyInfo, setCompanyInfo] = useState({description: '', name: '', contactEmail: '', contactPhone: ''} as CompanyInfo);
+  const [companyInfo, setCompanyInfo] = useState({description: '', name: '', contactEmail: '', contactPhone: ''} as ICompanyInfo);
   const companyNameInputRef = useRef(null);
 
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export function JobAddingPage({addSubmittedJob}: JobAddingPageProps): ReactNode 
         contactEmail: companyInfo.contactEmail,
         contactPhone: companyInfo.contactPhone
       }
-    } as Job;
+    } as IJob;
 
     addSubmittedJob(newJob);
     toast.success('Add A New Job Successfully!');
