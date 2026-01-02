@@ -2,10 +2,11 @@ import { useContext, useState } from 'react';
 import styles from './Job.module.css';
 import {FaMapMarked} from 'react-icons/fa'
 import { IJobContext, JobContext } from '../../pages/jobs-page/JobsPage';
+import { IJob } from '../../models/job.model';
 
 /* eslint-disable-next-line */
 export interface JobProps {
-  job: any
+  job: IJob,
 }
 
 export function Job({job}: JobProps) {

@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
 
-export interface LogInInfo {
+export interface ILogInInfo {
 	logInUser: string
 }
-const initialState: LogInInfo = {
+
+const initialState: ILogInInfo = {
   logInUser: 'Phat',
 };
 

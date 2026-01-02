@@ -106,43 +106,53 @@
       "company": {
         "contactEmail": "phatpx32@wru.vn"
       }
+    },
+    {
+      "id": "5d0e",
+      "title": "SER",
+      "type": "Part-Time",
+      "location": "Canada",
+      "description": "DSS",
+      "company": {
+        "contactEmail": "phatpx32@wru.vntry"
+      }
     }
   ],
   "countries": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Canada"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "US"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Peru"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "China"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Italy"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Korea"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Russia"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Mexico"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Finland"
     }
   ]
